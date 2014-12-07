@@ -1,0 +1,70 @@
+@import 'compass';
+
+.slider {
+  height: 100%;
+
+  .slider-slide {
+    padding-top: 80px;
+    color: #000;
+    background-color: #fff;
+    text-align: center;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+  }
+}
+
+#logo {
+  margin: 30px 0px;
+}
+
+#list {
+  width: 170px;
+  margin: 30px auto;
+  font-size: 20px;
+
+  ol {
+    margin-top: 30px;
+
+    li {
+      text-align: left;
+      list-style: decimal;
+      margin: 10px 0px;
+    }
+  }
+}
+
+.left-split{
+  float:left;
+  width:50%;
+  height:100%;
+  overflow:hidden;
+  position:relative;
+}
+.right-split{
+  float:right;
+  width:49%;
+  height:100%;
+  overflow:hidden;
+  position:relative;
+}
+.block{
+  display:block;
+}
+.sliding-background{
+  background-image: image-url('peace.png');
+  background-repeat: repeat;
+  width:100%;
+  height:100%;
+}
+.sliding-background.peace{
+  background-image: image-url('peace.gif');
+}
+.sliding-background.war{
+  background-image:image-url('war.gif');
+}
+
+div.points{
+  color:green;
+  font-size:24px;
+  padding: 4px 15px;
+}

@@ -1,0 +1,1063 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cordova",
+				"cordovaCamera"
+			],
+			[
+				"password",
+				"passwordMatch"
+			],
+			[
+				"header",
+				"headersGetter"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Gruntfile.js",
+			"settings":
+			{
+				"buffer_size": 15283,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/app.js",
+			"settings":
+			{
+				"buffer_size": 1515,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/controllers.js",
+			"settings":
+			{
+				"buffer_size": 3410,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "'use strict';\n/*jshint unused: vars */\n/* global Firebase*/\nangular.module('Prisoner.services',[])\n.factory('GameService', function($firebase,ENV,$q){\n	var ref = new Firebase(ENV.apiEndpoint);\n	return{\n		enterLobby:function(uid){\n			console.log('enteroing lobby',uid);\n			var deferred=$q.defer();\n			var amOnline = ref.child('.info/connected');\n		    var userRef = ref.child('lobby').child(uid);\n		    var lobby=ref.child('lobby');\n		    amOnline.on('value', function(snapshot) {\n		    	console.log(snapshot.val());\n			    if (snapshot.val()) {\n				    userRef.onDisconnect().remove();\n			    }\n		    });\n			// ref.child('lobby').child(uid).set({opponent:'',online:true,plays:'',timestamp:Firebase.ServerValue.TIMESTAMP},function(){\n				\n			// 	deferred.resolve(sync.$asObject());\n			// });\n\n			ref.child('lobby').child(uid).transaction(function(currentData){\n				return {opponent:'',online:true,timestamp:Firebase.ServerValue.TIMESTAMP,plays:''};\n			},function(){\n				var sync=$firebase(ref.child('lobby').child(uid));\n				deferred.resolve(sync.$asObject());\n			});			\n\n			return deferred.promise;\n\n\n		},\n		updateOpponent:function(id,userId,callback){\n			var deferred=$q.defer();\n			console.log('update lobby',id,userId);\n			ref.child('lobby').child(id).transaction(function(currentData){\n	          	if(currentData!==null){\n					return {opponent:userId,online:true,timestamp:Firebase.ServerValue.TIMESTAMP,plays:0};\n	          	}\n          	},callback());\n\n		},\n		getLobby:function(id){\n			return ref.child('lobby').orderByChild('timestamp');\n		},\n		getOpponent:function(id){\n			var sync= $firebase(ref.child('lobby').child(id));\n			return sync.$asObject();\n		},\n		getOpponentInfo:function(id){\n\n		}\n	};\n})\n.factory('loginService',function($firebase,$firebaseAuth,ENV,$q){\n	var ref = new Firebase(ENV.apiEndpoint);\n	return{\n		getAuth:function(){\n			var authObj=$firebaseAuth(ref);\n		 	return authObj.$getAuth();\n		},\n		facebook:function(){\n			var deferred=$q.defer();\n	        var auth = $firebaseAuth(ref);\n	        auth.$authWithOAuthPopup('facebook').then(function(authData) {\n	          console.log('Logged in as:', authData.uid);\n	          ref.child('users').child(authData.uid).set(authData);\n	          deferred.resolve(authData);\n	        }).catch(function(error) {\n	          console.error('Authentication failed: ', error);\n	          deferred.reject(error);\n	        });\n	        return deferred.promise;\n		},\n		anonymous:function(){\n			var self;\n			var deferred=$q.defer();\n			var auth = $firebaseAuth(ref);\n	        auth.$authAnonymously({remember:true}).then(function(authData) {\n			  console.log(\"Logged in as:\", authData.uid);\n		  	ref.child('users').child(authData.uid).set(authData);\n			  deferred.resolve(authData);\n			}).catch(function(error) {\n			  console.error(\"Authentication failed:\", error);\n			  deferred.reject(error);\n			});\n			return deferred.promise;\n		},\n		getUser:function(id){\n			console.log(id);\n			var sync=$firebase(ref.child('users').child(id));\n			return sync.$asObject();\n		}\n	};\n});",
+			"file": "app/scripts/services.js",
+			"file_size": 3122,
+			"file_write_time": 130624058043062802,
+			"settings":
+			{
+				"buffer_size": 3026,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/scripts/directives.js",
+			"settings":
+			{
+				"buffer_size": 886,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/index.html",
+			"settings":
+			{
+				"buffer_size": 1992,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/templates/main.html",
+			"settings":
+			{
+				"buffer_size": 1739,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/styles/main.scss",
+			"settings":
+			{
+				"buffer_size": 1027,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/lib/angularfire/dist/angularfire.js",
+			"settings":
+			{
+				"buffer_size": 78046,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/pgrue_000/prisoners/prisoners/app/index.html",
+		"/C/Users/pgrue_000/prisoners/prisoners/bower.json",
+		"/C/Users/pgrue_000/prisoners/prisoners/app/scripts/config.js",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/views/main.html",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/scripts/app.js",
+		"/C/Users/pgrue_000/xcards4/xcards4/bower.json",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/scripts/directives/navbar.js",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/scripts/directives/footerbar.js",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/index.html",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/styles/main.scss",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/styles/flatly/variables.scss",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/styles/bootstrapFlatly.min.css",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/styles/flatly.scss",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/styles/flatly/flatly.scss",
+		"/C/Users/pgrue_000/xcards4/xcards4/app/views/partials/navbar.html",
+		"/C/Users/pgrue_000/xcards4/xcards4/bower_components/angular-cookies/angular-cookies.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/ionic/scss/_animations.scss",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/styles/_datePicker.scss",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/datePicker.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/partials/dateTimePicker.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/app.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/controllers.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/presentation.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/create.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/filters.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/survey.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/menu.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/datePicker.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/styles/main.scss",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/appMap.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/bower.json",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/ionic/js/angular/controller/sideMenuController.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/index.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/Gruntfile.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/map.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/services.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/directives.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/angular-native-picker/src/directives.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/upload.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/feed.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/browse.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/accountCtrl.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/login.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/authenticationService.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/bower_components/angular/bower.json",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/intro.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/routerSecurity.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/www/templates/login.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/img/intrafraternity-council.gif",
+		"/C/Users/pgrue_000/bullet3/bullet3/www/firebase.json",
+		"/C/Users/pgrue_000/bullet3/bullet3/node_modules/grunt-ng-annotate/node_modules/ng-annotate/tests/ngmin-tests/repo/route-provider.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/config.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/templates/account.html",
+		"/C/Users/pgrue_000/bullet3/bullet3/config.xml",
+		"/C/Users/pgrue_000/bullet3/bullet3/app/scripts/firebase.utils.js",
+		"/C/Users/pgrue_000/bullet3/bullet3/node_modules/ripple-emulator/node_modules/request/main.js",
+		"/C/Users/pgrue_000/bullet/readMe.md",
+		"/C/Users/pgrue_000/bullet/app/views/login.html",
+		"/C/Users/pgrue_000/bullet/app/views/menu.html",
+		"/C/Users/pgrue_000/bullet/app/views/search.html",
+		"/C/Users/pgrue_000/bullet/app/scripts/app.js",
+		"/C/Users/pgrue_000/bullet/app/views/main.html",
+		"/C/Users/pgrue_000/bullet/app/views/playlist.html",
+		"/C/Users/pgrue_000/bullet/app/views/playlists.html",
+		"/C/Users/pgrue_000/bullet/app/views/browse.html",
+		"/C/Users/pgrue_000/bullet/app/styles/main.scss",
+		"/C/Users/pgrue_000/bullet/bower.json",
+		"/C/Users/pgrue_000/bullet/app/styles/_mobile.scss",
+		"/C/Users/pgrue_000/bullet/app/styles/_app.scss",
+		"/C/Users/pgrue_000/bullet/app/styles/ionic/_variables.scss",
+		"/C/Users/pgrue_000/bullet/bower_components/ionic/scss/ionic.scss",
+		"/C/Users/pgrue_000/bullet/app/index.html",
+		"/C/Users/pgrue_000/bullet/app/styles/_variables.scss",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/demoCtrl.js",
+		"/C/Users/pgrue_000/blocksquad/app/styles/_app.scss",
+		"/C/Users/pgrue_000/blocksquad/bower_components/angular-strap/src/tab/tab.tpl.html",
+		"/C/Users/pgrue_000/blocksquad/app/index.html",
+		"/C/Users/pgrue_000/blocksquad/app/views/main.html",
+		"/C/Users/pgrue_000/blocksquad/bower_components/angular-strap/src/tab/tab.js",
+		"/C/Users/pgrue_000/blocksquad/app/views/partials/stuntCardsEdit.html",
+		"/C/Users/pgrue_000/blocksquad/bower_components/angular-carousel/dist/angular-carousel.css",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/animateonchange.js",
+		"/C/Users/pgrue_000/blocksquad/app/styles/_mobile.scss",
+		"/C/Users/pgrue_000/blocksquad/Gruntfile.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/cardstunt.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/app.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/scrollable.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/scrollingbackground.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/cheerpopup.js",
+		"/C/Users/pgrue_000/blocksquad/bower_components/ionic/scss/_popup.scss",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/navbarCtrl.js",
+		"/C/Users/pgrue_000/blocksquad/app/views/partials/navbar.html",
+		"/C/Users/pgrue_000/blocksquad/bower_components/angular-momentum-scroll/scrollable.js",
+		"/C/Users/pgrue_000/blocksquad/app/views/partials/cheerPopup.html",
+		"/C/Users/pgrue_000/blocksquad/app/views/frontpage.html",
+		"/C/Users/pgrue_000/blocksquad/bower_components/bootstrap-sass/lib/_variables.scss",
+		"/C/Users/pgrue_000/blocksquad/bower_components/bootstrap-sass/lib/bootstrap.scss",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/services/demoService.js",
+		"/C/Users/pgrue_000/blocksquad/app/styles/mobile/_bar.scss",
+		"/C/Users/pgrue_000/blocksquad/app/styles/mobile/_list.scss",
+		"/C/Users/pgrue_000/blocksquad/app/styles/mobile/_item.scss",
+		"/C/Users/pgrue_000/blocksquad/.sass-cache/fdcfa9381eddb579676cfa2a55cb26d029440e49/_app.scssc",
+		"/C/Users/pgrue_000/blocksquad/app/styles/main.scss",
+		"/C/Users/pgrue_000/blocksquad/app/views/about.html",
+		"/C/Users/pgrue_000/blocksquad/bower.json",
+		"/C/Users/pgrue_000/blocksquad/.sass-cache/fdcfa9381eddb579676cfa2a55cb26d029440e49/main.scssc",
+		"/C/Users/pgrue_000/blocksquad/bower_components/ionic/scss/ionic.scss",
+		"/C/Users/pgrue_000/blocksquad/app/views/demo.html",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/demo.js",
+		"/C/Users/pgrue_000/blocksquad/app/styles/_fonts.scss",
+		"/C/Users/pgrue_000/blocksquad/test/spec/controllers/demo.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/main.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/account.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/login.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/config.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/blocksquad.directives.js",
+		"/C/Users/pgrue_000/blocksquad/app/views/partials/loginModal.html",
+		"/C/Users/pgrue_000/blocksquad/app/styles/_variables.scss",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/factories/simpleLogin.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/decorators/ngcloakdirectivedecorator.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/factories/firebase.utils.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/directives/navbar.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/controllers/navbar.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/filters/blocksquad.filters.js",
+		"/C/Users/pgrue_000/blocksquad/bower_components/angularfire/dist/angularfire.js",
+		"/C/Users/pgrue_000/blocksquad/app/scripts/factories/changeEmail.js"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"opponent",
+			"$scope.opponent",
+			"resetgame",
+			"$scope.resetGame",
+			"updateLobby",
+			"update",
+			".then(",
+			"callback",
+			"success",
+			"sucess",
+			"success",
+			"enterLobby",
+			"inGame",
+			"          ",
+			"apply(",
+			"firebaseAuth",
+			"currentState",
+			"port",
+			"firebaseAuth",
+			"compass",
+			"{{",
+			"splash",
+			"{{",
+			"\"",
+			"feed",
+			"item",
+			"width",
+			"day",
+			"width",
+			"20px",
+			"th",
+			"+",
+			"wiredep",
+			"'",
+			"\"",
+			"width",
+			".right",
+			"right",
+			"leftdate",
+			"title",
+			"data.title",
+			"arguments",
+			"updateMarkers",
+			"getLocation",
+			"markerCb",
+			"ONiTEMcLICK",
+			"lon",
+			"contentstring",
+			"infowindow",
+			"mapOptions",
+			"markerCb",
+			"setcenter",
+			"LatLng",
+			"getLocation",
+			"center",
+			"basel",
+			"style",
+			"create",
+			"\"",
+			"pickadate",
+			"wiredep",
+			"cordova",
+			"join",
+			"spawn",
+			"createProfile",
+			"$rootScope",
+			"auth.user",
+			"authenticated",
+			"show",
+			"_authState",
+			"_loginstate",
+			"._authenticated",
+			"log",
+			"EventSService",
+			"div",
+			"_authState",
+			"alreadyLogged",
+			"\"",
+			"this",
+			"watch",
+			"cb",
+			"createAccount",
+			"fns.user",
+			"user",
+			"$location",
+			"url",
+			"FB",
+			"FBU",
+			"FBURL",
+			"FB",
+			"FBURL",
+			"templates",
+			"wiredep",
+			"$panes",
+			"\"",
+			"tabs",
+			"template",
+			"page",
+			"enter email",
+			"-leave",
+			"-add",
+			"-enter",
+			"enter",
+			"find",
+			"pages",
+			"text",
+			"dropdown",
+			"\"",
+			"wiredep",
+			"module",
+			"handleScrol",
+			"onScrollMove",
+			"onScrollEnd",
+			"scrollEnd",
+			"scrollStart",
+			"iscrollInstance",
+			"onScrollStart",
+			"handleScrollStart",
+			"on(",
+			"on:",
+			"scrollStart",
+			"_events",
+			"_event",
+			"_event:",
+			"_events:",
+			"_event",
+			"._event",
+			"execEvent"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Gruntfile.js",
+					"settings":
+					{
+						"buffer_size": 15283,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4771,
+								4771
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2790.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/scripts/app.js",
+					"settings":
+					{
+						"buffer_size": 1515,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1264,
+								1264
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/scripts/controllers.js",
+					"settings":
+					{
+						"buffer_size": 3410,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1186,
+								1186
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/scripts/services.js",
+					"settings":
+					{
+						"buffer_size": 3026,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1059,
+								1059
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 324.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/scripts/directives.js",
+					"settings":
+					{
+						"buffer_size": 886,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								503,
+								503
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/index.html",
+					"settings":
+					{
+						"buffer_size": 1992,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1478,
+								1478
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/templates/main.html",
+					"settings":
+					{
+						"buffer_size": 1739,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								162,
+								162
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/styles/main.scss",
+					"settings":
+					{
+						"buffer_size": 1027,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								759,
+								759
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 486.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/lib/angularfire/dist/angularfire.js",
+					"settings":
+					{
+						"buffer_size": 78046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								43229,
+								43229
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 20168.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"main.html",
+				"app/templates/main.html"
+			],
+			[
+				"gruntfile",
+				"Gruntfile.js"
+			],
+			[
+				"index",
+				"app/index.html"
+			],
+			[
+				"bower",
+				"bower.json"
+			],
+			[
+				"bower.j",
+				"bower.json"
+			],
+			[
+				"config",
+				"app/scripts/config.js"
+			],
+			[
+				"footerbar.j",
+				"app/scripts/directives/footerbar.js"
+			],
+			[
+				"footerbar",
+				"app/views/partials/footerBar.html"
+			],
+			[
+				"main.scss",
+				"app/styles/main.scss"
+			],
+			[
+				"gruntfil",
+				"Gruntfile.js"
+			],
+			[
+				"flatlly.scss",
+				"app/styles/flatly/flatly.scss"
+			],
+			[
+				"navbar.html",
+				"app/views/partials/navbar.html"
+			],
+			[
+				"feed",
+				"app/templates/feed.html"
+			],
+			[
+				"controllers",
+				"app/scripts/controllers.js"
+			],
+			[
+				"topic",
+				"app/templates/topic.html"
+			],
+			[
+				"create",
+				"app/templates/create.html"
+			],
+			[
+				"presentat",
+				"app/templates/presentation.html"
+			],
+			[
+				"main.scs",
+				"app/styles/main.scss"
+			],
+			[
+				"mains.scss",
+				"app/bower_components/ionic/scss/_animations.scss"
+			],
+			[
+				"survey",
+				"app/templates/survey.html"
+			],
+			[
+				"menu.",
+				"app/templates/menu.html"
+			],
+			[
+				"app.js",
+				"app/scripts/app.js"
+			],
+			[
+				"create.",
+				"app/templates/create.html"
+			],
+			[
+				"filers",
+				"app/scripts/filters.js"
+			],
+			[
+				"date",
+				"app/templates/datePicker.html"
+			],
+			[
+				"filters",
+				"app/scripts/filters.js"
+			],
+			[
+				"menu",
+				"app/templates/menu.html"
+			],
+			[
+				"appmap",
+				"app/scripts/appMap.js"
+			],
+			[
+				"grunt",
+				"Gruntfile.js"
+			],
+			[
+				"app",
+				"app/scripts/app.js"
+			],
+			[
+				"browse",
+				"app/templates/browse.html"
+			],
+			[
+				"login.h",
+				"app/templates/login.html"
+			],
+			[
+				"account",
+				"app/scripts/accountCtrl.js"
+			],
+			[
+				"authentica",
+				"app/scripts/authenticationService.js"
+			],
+			[
+				"intro",
+				"app/templates/intro.html"
+			],
+			[
+				"dire",
+				"app/scripts/directives.js"
+			],
+			[
+				"controller",
+				"app/scripts/controllers.js"
+			],
+			[
+				"login",
+				"app/templates/login.html"
+			],
+			[
+				"router",
+				"app/scripts/routerSecurity.js"
+			],
+			[
+				"app.",
+				"app/scripts/app.js"
+			],
+			[
+				"accoun",
+				"app/scripts/accountCtrl.js"
+			],
+			[
+				"services",
+				"app/scripts/services.js"
+			],
+			[
+				"routersecur",
+				"app/scripts/routerSecurity.js"
+			],
+			[
+				"routeer",
+				"node_modules/grunt-ng-annotate/node_modules/ng-annotate/tests/ngmin-tests/repo/route-provider.js"
+			],
+			[
+				"accountctrl",
+				"app/scripts/accountCtrl.js"
+			],
+			[
+				"app.j",
+				"app/scripts/app.js"
+			],
+			[
+				"account.",
+				"app/templates/account.html"
+			],
+			[
+				"login.",
+				"www/templates/login.html"
+			],
+			[
+				"contrll",
+				"app/scripts/controllers.js"
+			],
+			[
+				"main.js",
+				"node_modules/ripple-emulator/node_modules/request/main.js"
+			],
+			[
+				"playlist",
+				"app/views/playlist.html"
+			],
+			[
+				"controllers/main",
+				"app/scripts/controllers/main.js"
+			],
+			[
+				"inde",
+				"app/index.html"
+			],
+			[
+				"app.scss",
+				"app/styles/_app.scss"
+			],
+			[
+				"app.scs",
+				"app/styles/_app.scss"
+			],
+			[
+				"cardst",
+				"app/scripts/controllers/cardstunt.js"
+			],
+			[
+				"navbar",
+				"app/scripts/controllers/navbar.js"
+			],
+			[
+				"demo",
+				"app/scripts/controllers/demo.js"
+			],
+			[
+				"_mobile",
+				"app/styles/_mobile.scss"
+			],
+			[
+				"frontpage",
+				"app/views/frontpage.html"
+			],
+			[
+				"bootstrap-sass/lib/_varia",
+				"bower_components/bootstrap-sass/lib/_variables.scss"
+			],
+			[
+				"bootstrap.scss",
+				"bower_components/bootstrap-sass/lib/bootstrap.scss"
+			],
+			[
+				"_list.sc",
+				"app/styles/mobile/_list.scss"
+			],
+			[
+				"_mobile.sc",
+				"app/styles/_mobile.scss"
+			],
+			[
+				"services/demoser",
+				"app/scripts/services/demoService.js"
+			],
+			[
+				"_app",
+				"app/styles/_app.scss"
+			],
+			[
+				"main",
+				".sass-cache/fdcfa9381eddb579676cfa2a55cb26d029440e49/main.scssc"
+			],
+			[
+				"gruntf",
+				"Gruntfile.js"
+			],
+			[
+				"controllers/demo",
+				"app/scripts/controllers/demo.js"
+			],
+			[
+				"scss",
+				"app/styles/main.scss"
+			],
+			[
+				"simplelo",
+				"app/scripts/factories/simpleLogin.js"
+			],
+			[
+				"fbutil",
+				"app/scripts/factories/firebase.utils.js"
+			],
+			[
+				"simplel",
+				"app/scripts/factories/simpleLogin.js"
+			],
+			[
+				"directive",
+				"app/scripts/directives/blocksquad.directives.js"
+			],
+			[
+				"ngcloa",
+				"app/scripts/decorators/ngcloakdirectivedecorator.js"
+			],
+			[
+				"interpo",
+				"app/scripts/filters/interpolate.js"
+			],
+			[
+				"controllers/app",
+				"app/scripts/controllers/app.js"
+			],
+			[
+				"angularfire",
+				"bower_components/angularfire/dist/angularfire.js"
+			],
+			[
+				"holder",
+				"app/scripts/directives/holder.js"
+			],
+			[
+				"templates/",
+				"app/templates/single.html"
+			],
+			[
+				"conrollers",
+				"www/js/controllers.js"
+			],
+			[
+				"addressesmoda",
+				"www/templates/addressesModal.html"
+			],
+			[
+				"direc",
+				"www/js/directives.js"
+			],
+			[
+				"www/ind",
+				"www/index.html"
+			],
+			[
+				"www",
+				"www/index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 279.0,
+	"status_bar_visible": true
+}

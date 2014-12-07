@@ -1,0 +1,73 @@
+<ion-view hide-back-button="true" title="Dove/Hawk">
+<ion-nav-buttons side="right">
+    <button class="icon-right ion-ios7-arrow-forward button button-clear" ui-sref="board">
+        Leaders
+    </button>
+  </ion-nav-buttons>
+  <ion-content padding="false">
+  	<div class="block">
+        <div style="text-align:center;">Plays: {{lobbySpot.plays}}, Limit: {{rules.limit}}, H/D: {{rules.hawkDove}} D/D: {{rules.doveDove}}, H/H: {{rules.hawkHawk}} D/H: {{rules.doveHawk}}</div>
+        <div style="color:brown">{{message}}</div>
+  		<div class="left-split">
+    		<div class="profile">
+                <label class="item item-input">
+                    <span class="input-label">Edit Name:</span>
+                    <input type="text" ng-model="user.fullname">
+                  </label>
+                <div class="points">{{lobbySpot.points}}</div>
+    		</div>
+    	</div>
+    	<div class="right-split">
+    		<div class="profile" style="text-align:right">
+    			<span ng-show="opponentInfo.timestamp>0">{{opponentInfo.fullname}}</span>
+                <span ng-hide="opponentInfo.timestamp>0">Searching for other person...</span>
+                <div class="points">{{opponent.points}}</div>
+    		</div>
+    	</div>
+    </div>
+	<div class="block">
+    	<div class="left-split">
+    		<div ng-switch="lobbySpot.choice">
+    			<div ng-switch-default style="text-align:center; padding-top:40px;">
+    				<h1>?<h1>
+    			</div>
+    			<div ng-switch-when="hawk" >
+	    			<div sliding background-class="war">    		
+		    			<img src="images/hawk.png"/>
+		    		</div>
+	    		</div>
+	    		<div ng-switch-when="dove">
+		    		<div sliding background-class="peace">    		
+		    			<img src="images/dove.png"/>
+		    		</div>
+	    		</div>
+    		</div>
+    	</div>
+    	<div class="right-split">
+    		<div ng-switch="opponentChoice">
+    			<div ng-switch-default style="text-align:center; padding-top:40px;">
+    				<h1>?<h1>
+    			</div>
+    			<div ng-switch-when="hawk" >
+	    			<div sliding background-class="war">    		
+		    			<img src="images/hawk.png"/>
+		    		</div>
+	    		</div>
+	    		<div ng-switch-when="dove">
+		    		<div sliding background-class="peace">    		
+		    			<img src="images/dove.png"/>
+		    		</div>
+	    		</div>
+    		</div>
+    	</div>
+    </div>
+	<div class="block">
+		<div class="left-split">
+			<button ng-click="choose('hawk')" class="button button-block"> Hawk </button>
+		</div>
+		<div class="right-split">
+			<button ng-click="choose('dove')" class="button button-block"> DOVE </button>
+		</div>
+	</div>
+  </ion-content>
+</ion-view>
