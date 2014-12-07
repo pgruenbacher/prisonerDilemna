@@ -153,9 +153,11 @@ angular.module('Prisoner.services',[])
             var deferred=$q.defer();
             var auth = $firebaseAuth(ref);
             auth.$authAnonymously({remember:true}).then(function(authData) {
-              console.log("Logged in as:", authData.uid);
-            ref.child('users').child(authData.uid).set(authData);
-              deferred.resolve(authData);
+                console.log("Logged in as:", authData.uid);
+                authData.games=0;
+                authData.points=0;
+                ref.child('users').child(authData.uid).set(authData);
+                deferred.resolve(authData);
             }).catch(function(error) {
               console.error("Authentication failed:", error);
               deferred.reject(error);

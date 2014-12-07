@@ -83,6 +83,7 @@ angular.module('Prisoner.controllers', [])
             });
             GameService.getOpponentInfo(snapshot.key()).then(function(data){
               $scope.opponentInfo=data;
+              console.log('opponentInfo',data);
             });
           });
         }
@@ -104,6 +105,7 @@ angular.module('Prisoner.controllers', [])
             });
             GameService.getOpponentInfo(newValue.opponent).then(function(data){
               $scope.opponentInfo=data;
+              console.log('opponentInfo',data);
             });
           });
         }
@@ -158,6 +160,7 @@ angular.module('Prisoner.controllers', [])
             if($scope.lobbySpot.plays>=limit){
               console.log('congrats plays limit, reset');
               $scope.message='congrats, round finished';
+              $timeout(function(){$scope.message=''},2000);
               $scope.resetGame();
               GameService.addGameNumber(user.uid);
               GameService.transferPoints(user.uid,$scope.lobbySpot.points);
@@ -184,6 +187,7 @@ angular.module('Prisoner.controllers', [])
             if($scope.lobbySpot.plays>=limit){
               console.log('congrats plays limit, reset');
               $scope.message='congrats, round finished';
+              $timeout(function(){$scope.message=''},2000);
               $scope.resetGame();
               GameService.addGameNumber(user.uid);
               GameService.transferPoints(user.uid,$scope.lobbySpot.points);

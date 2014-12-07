@@ -10,17 +10,15 @@
         <div style="color:brown">{{message}}</div>
   		<div class="left-split">
     		<div class="profile">
-                <label class="item item-input">
-                    <span class="input-label">Edit Name:</span>
-                    <input type="text" ng-model="user.fullname">
-                  </label>
+                <span class=>Edit:</span>
+                <input type="text" ng-model="user.fullname">
                 <div class="points">{{lobbySpot.points}}</div>
     		</div>
     	</div>
     	<div class="right-split">
     		<div class="profile" style="text-align:right">
-    			<span ng-show="opponentInfo.timestamp>0">{{opponentInfo.fullname}}</span>
-                <span ng-hide="opponentInfo.timestamp>0">Searching for other person...</span>
+    			<span ng-show="opponentInfo.expires>0">{{opponentInfo.fullname}}</span>
+                <span ng-hide="opponentInfo.expires>0">Searching for other person...</span>
                 <div class="points">{{opponent.points}}</div>
     		</div>
     	</div>
